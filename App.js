@@ -1,21 +1,54 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { Component } from 'react';
+import { Ionicons } from '@expo/vector-icons';
+import { TabNavigator, TabBarBottom } from 'react-navigation';
 
-export default class App extends React.Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-      </View>
-    );
-  }
-}
+import {styles} from "./js/styles";
+import FileList from './js/fileList';
+import Viewer from './js/viewer';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+export default TabNavigator(
+  {
+    FileTab: {
+      screen: FileList,
+    },
+    ViewerTab: {
+      screen: Viewer,
+    },
+/*
+    Settings: {
+      screen: SettingsScreen,
+    },
+    */
   },
-});
+  {
+    navigationOptions: ({ navigation }) => ({
+      tabBarIcon: ({ focused }) => {
+        const { routeName } = navigation.state;
+        let iconName;
+        switch (routeName) {
+          case 'FileTab':
+            iconName = `ios-information-circle${focused ? '' : '-outline'}`;
+            break;
+          case 'ViewerTab':
+            iconName = `ios-link${focused ? '' : '-outline'}`;
+            break;
+          case 'Settings':
+            iconName = `ios-options${focused ? '' : '-outline'}`;
+        }
+        return (
+          <Ionicons
+            name={iconName}
+            size={28}
+            style={{ marginBottom: -3 }}
+            color={focused ? styles.tabIcon_Selected : styles.tabIcon}
+          />
+        );
+      },
+    }),
+    tabBarComponent: TabBarBottom,
+    tabBarPosition: 'bottom',
+    animationEnabled: false,
+    swipeEnabled: false,
+  }
+);
+
