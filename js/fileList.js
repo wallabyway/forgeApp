@@ -1,6 +1,7 @@
 import React from 'react';
 import { StackNavigator, NavigationActions } from 'react-navigation';
 import { AsyncStorage, ScrollView, Image, Button, FlatList, View, Text, TouchableOpacity } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 
 import {styles} from "./styles";
 import store  from "./store";
@@ -77,8 +78,17 @@ class FileListNav extends React.Component {
         this.props.navigation.dispatch(resetAction);        
     }
 
+    getIcon(type){
+        if (type == 'projects:autodesk.core:Project') return 'ios-cube';
+        if (type == 'folders:autodesk.core:Folder') return 'ios-git-merge';
+        if (type == 'items:autodesk.core:File') return 'ios-document';
+        return 'ios-folder-open';
+    }
+
     render() {
         const { navigate } = this.props.navigation;
+
+        const arrowIcon = (<Ionicons name="ios-arrow-forward" style={{paddingLeft:10}} size={16} color="#009" />);
 
         // Login button
         const loginButton = 
@@ -123,13 +133,18 @@ class FileListNav extends React.Component {
                                 else {
                                     navigate('Links', {headerTitle:item.name, selectedItem:item, refreshing:true} );
                                 }
-                            }}> 
-                            <Text>{item.name}</Text>
+                            }}>
+
+                            <Ionicons name={this.getIcon(item.type)} style={{paddingRight:10}} size={16} color="#009" />
+                            <Text>{item.name}</Text>{arrowIcon}
                          </TouchableOpacity>
 
                     }
                 />
-            {loginButton}
+
+                <View style={{flexDirection: 'row'}}>
+                    <Ionicons name="ios-contact" style={{paddingLeft:10}} size={40} color="#009" />{loginButton}
+                </View>
             </View>
         );
     } 
