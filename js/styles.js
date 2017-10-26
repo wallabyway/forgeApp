@@ -4,7 +4,8 @@ let width = Dimensions.get('window').width;
 
 const primaryColor = "#42a";
 const dullColor = "#aaa";
-const backgroundColor = '#fff';
+const backgroundColor = '#eee';
+const backgroundDullColor = '#ddd';
 
 export const styles = StyleSheet.create({
 	h1: {
@@ -47,6 +48,7 @@ export const styles = StyleSheet.create({
 
 styles.tabIcon_Selected = primaryColor;
 styles.tabIcon = dullColor;
+styles.tabBackgroundColor = backgroundDullColor;
 
 styles.viewerHTML = `
         <head>

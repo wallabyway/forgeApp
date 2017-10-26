@@ -8,10 +8,10 @@ import Viewer from './js/viewer';
 
 export default TabNavigator(
   {
-    FileTab: {
+    Files: {
       screen: FileList,
     },
-    ViewerTab: {
+    Viewer: {
       screen: Viewer,
     },
 /*
@@ -26,10 +26,10 @@ export default TabNavigator(
         const { routeName } = navigation.state;
         let iconName;
         switch (routeName) {
-          case 'FileTab':
+          case 'Files':
             iconName = `ios-information-circle${focused ? '' : '-outline'}`;
             break;
-          case 'ViewerTab':
+          case 'Viewer':
             iconName = `ios-link${focused ? '' : '-outline'}`;
             break;
           case 'Settings':
@@ -45,6 +45,9 @@ export default TabNavigator(
         );
       },
     }),
+    tabBarOptions: {
+      style: { backgroundColor: styles.tabBackgroundColor }
+    },
     tabBarComponent: TabBarBottom,
     tabBarPosition: 'bottom',
     animationEnabled: false,
