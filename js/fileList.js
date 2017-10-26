@@ -105,7 +105,7 @@ class FileListNav extends React.Component {
                             headers: {Authorization: `Bearer ${store.token}`}
                         }}/>
                         <Button title="View File" onPress={ () => {
-                            mTabNav.navigate('ViewerTab', { urn: this.state.urn, token: store.token })
+                            mTabNav.navigate('Viewer', { urn: this.state.urn, token: store.token })
                         }}/>
                     <Text style={styles.h1}>{this.state.file.displayName}</Text>
                     <Text style={styles.h2}>size: {this.state.file.storageSize /1000 }kB</Text>
@@ -129,7 +129,7 @@ class FileListNav extends React.Component {
                          <TouchableOpacity style={styles.listitem} 
                             onPress={ () => {
                                 if (item.type == 'versions')
-                                    mTabNav.navigate('ViewerTab', {urn: item.id, refreshing:true})
+                                    mTabNav.navigate('Viewer', {urn: item.id, refreshing:true})
                                 else {
                                     navigate('Links', {headerTitle:item.name, selectedItem:item, refreshing:true} );
                                 }
