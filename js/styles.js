@@ -2,18 +2,25 @@ import { StyleSheet, Dimensions } from 'react-native';
 
 let width = Dimensions.get('window').width;
 
-const primaryColor = "#a24";
+const primaryColor = "#42a";
 const dullColor = "#aaa";
+const backgroundColor = '#fff';
 
 export const styles = StyleSheet.create({
 	h1: {
-	    fontSize:22,
-	    color: primaryColor
+	    fontSize:18,
+	    color: primaryColor,
+        width: width
 	},
+
+    h2: {
+        paddingLeft: 30,
+        width: width,
+    },
 
 	container: {
 	    flex: 1,
-	    backgroundColor: '#fff',
+	    backgroundColor: backgroundColor,
 	    alignItems: 'center',
 	    justifyContent: 'center',
 	},
@@ -27,13 +34,13 @@ export const styles = StyleSheet.create({
 		padding: 10,
 		borderBottomWidth: 1,
 		borderStyle: 'solid',
-		borderColor: '#ecf0f1',
+		borderColor: dullColor,
         width: width
 	},
 
 	photo: {
-		width:50,
-		height:50
+		width:width,
+        height:width
 	}
 
 });
@@ -53,8 +60,6 @@ styles.viewerHTML = `
         <body style="margin:0"><div id="viewer"></div></body>
         <script>
             var viewer;
-            var viewerDiv = document.getElementById('viewer');
-            document.addEventListener("message", function(msg) { }, false);
 
             function initializeViewer(urn, token) {
                 var options = {
@@ -65,6 +70,11 @@ styles.viewerHTML = `
                 };
 
                 function onSuccess(doc) {
+                    function onLoadModelSuccess() {
+                        viewer.setBackgroundColor(40,40,30,255,255,255);
+                        viewer.setLightPreset(17);
+                    }
+
                     // A document contains references to 3D and 2D viewables.
                     var viewables = Autodesk.Viewing.Document.getSubItemsWithProperties(doc.getRootItem(), {'type':'geometry'}, true);
                     var initialViewable = viewables[0];
@@ -72,11 +82,9 @@ styles.viewerHTML = `
                     var modelOptions = {
                         sharedPropertyDbPath: doc.getPropertyDbPath()
                     };
-
                     var viewerDiv = document.getElementById('viewer');
                     viewer = new Autodesk.Viewing.Private.GuiViewer3D(viewerDiv);
-                    viewer.start(svfUrl, modelOptions);
-                    viewer.setBackgroundColor(200,200,200,255,255,255);
+                    viewer.start(svfUrl, modelOptions, onLoadModelSuccess);
                 };
                 Autodesk.Viewing.Initializer(options, function onInitialized(){
                     Autodesk.Viewing.Document.load(urn, onSuccess);

@@ -8,14 +8,13 @@ export default class Viewer extends Component {
 
     constructor(props) {
       super(props);
-      this.state = {token:"", profileurl:""};
     }
 
     // Handle Viewer Launch
     componentDidUpdate() {
         const {state} = this.props.navigation;
         if (state.params)
-          this.loadViewer(state.params.urn, this.state.token);
+          this.loadViewer(state.params.urn, state.params.token);
     }
 
     loadViewer(urn, token) {
@@ -30,6 +29,7 @@ export default class Viewer extends Component {
               source={{ html: styles.viewerHTML }}
               style={styles.webview}
               javaScriptEnabled={true}
+              scrollEnabled={false}
               ref = {webview => { this.viewer = webview; }}
           />
         </View>
